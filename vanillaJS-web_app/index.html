@@ -3,6 +3,9 @@
 
 <head>
     <meta name="description" content="LocalChat: Serverless Browser AI Summarizer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js" defer></script>
+
+
     <meta charset="utf-8">
     <title>LocalChat</title>
 
@@ -122,9 +125,9 @@
             <textarea id="inputTextArea"></textarea>
             <div class="fileUploadContainer">
                 <label for="fileInput" class="fileUploadLabel" title="Select one or more files to upload">Upload File/s</label>
-                <input type="file" id="fileInput" multiple accept=".txt">
+                <input type="file" id="fileInput" multiple accept=".txt, .docx">
                 <label for="folderInput" class="fileUploadLabel" title="Select a folder to upload all files (not supported on older browsers)">Upload Folder</label>
-                <input type="file" id="folderInput" webkitdirectory multiple accept=".txt">
+                <input type="file" id="folderInput" webkitdirectory multiple accept=".txt, .docx">
                 <label class="fileCount" id="fileCount">0 Files Selected</label>
             </div>
             
@@ -137,45 +140,61 @@
 <script>
 
     function getUserInput() {
-
-        // Check if any files were uploaded.
         const fileInput = document.getElementById("fileInput");
         const folderInput = document.getElementById("folderInput");
 
         const inputFiles = fileInput.files;
         const inputFolder = folderInput.files;
-
         const allFiles = [...inputFiles, ...inputFolder];
 
         if (allFiles.length > 0) {
-
             for (const file of allFiles) {
 
-                if (!file.name.endsWith(".txt")) {
-                    continue;
+                // Handling of TXT files
+                if (file.name.endsWith(".txt")) {
+                    const fileReader = new FileReader();
+                    fileReader.onload = () => {
+                        console.log(fileReader.result);
+                        addMessageToHistory("Added File " + file.name, true);
+                    };
+                    fileReader.readAsText(file);
+                } 
+                
+                // Handling of DOCX files
+                else if (file.name.endsWith(".docx")) {
+                    const fileReader = new FileReader();
+                    fileReader.onload = function (event) {
+                        const arrayBuffer = event.target.result;
+                        mammoth.extractRawText({ arrayBuffer: arrayBuffer })
+                            .then(function (result) {
+                                console.log("Extracted DOCX Text:", result.value);
+                                // if we want the user to see everything they sent (contents of the docx body)
+                            //addMessageToHistory("Extracted text from " + file.name + ":\n" + result.value, true);
+
+                            // Log the content to console only as seen on previous .txt implementation
+                                console.log("Extracted DOCX Text from " + file.name + ":", result.value);
+                                // Add only the filename to the chat history
+                                addMessageToHistory("Added File " + file.name, true);
+                            })
+                            // catch block for error handling, idk if needed
+                            .catch(function (err) {
+                                addMessageToHistory("Error processing " + file.name + ": " + err.message, false);
+                            });
+                    };
+                    fileReader.readAsArrayBuffer(file);
                 }
-
-                // Create the file reader for this file
-                const fileReader = new FileReader();
-                fileReader.onload = () => {
-                    console.log(fileReader.result);
-                    addMessageToHistory("Added File " + file.name, true);
-                };
-                fileReader.readAsText(file);
             }
-
+            
+            // Reset input fields
             fileInput.value = null;
             folderInput.value = null;
-
             document.getElementById("fileCount").innerText = "0 Files Selected";
         }
 
-        // Check if a message was sent
+        // Handle user input message
         const inputTextArea = document.getElementById("inputTextArea");
-        const userMessage = inputTextArea.value
-
-        // Add the user message to the history
-        if (userMessage != "") {
+        const userMessage = inputTextArea.value;
+        if (userMessage !== "") {
             addMessageToHistory(userMessage, true);
             inputTextArea.value = "";
         }
