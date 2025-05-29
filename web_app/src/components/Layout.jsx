@@ -71,6 +71,7 @@ function Layout(props) {
     setRenamingId(null);
   };
 
+  // this may need to be changed, the dropdown menu for chat histories is very messy and temporary.
   // toggle dropdown menu
   const toggleMenu = (chatId) => {
     setOpenMenuId(openMenuId() === chatId ? null : chatId);
@@ -83,7 +84,7 @@ function Layout(props) {
     }
   };
 
-  // Add click listener to close menu when clicking outside
+  // add click listener to close menu when clicking outside
   createEffect(() => {
     if (openMenuId()) {
       document.addEventListener('click', handleClickOutside);

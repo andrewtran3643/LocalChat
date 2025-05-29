@@ -44,7 +44,7 @@
     border: 1px solid lightgrey;
 }
 
-/* Menu container and button styles */
+/* menu container and the new PLACEHOLDER button styles, this is very messy and very temporary will be changed later*/
 .menuContainer {
     position: relative;
     display: flex;
@@ -73,7 +73,7 @@
     background-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Dropdown menu styles */
+/* dropdown menu styles */
 .dropdown {
     position: absolute;
     top: 100%;
