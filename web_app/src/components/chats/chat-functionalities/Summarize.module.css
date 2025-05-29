@@ -4,10 +4,15 @@
   padding: 1vh;
   border-top: 1px solid black;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
+
 .hidden {
   display: none;
 }
+
 .unselectedModelButton {
   border: 1px solid #474747;
   border-radius: 3px;
@@ -19,10 +24,12 @@
   margin-right: 3vh;
   border-color: darkred;
 }
+
 .unselectedModelButton:hover {
   border-color: firebrick;
   cursor: pointer;
 }
+
 .selectedModelButton {
   border: 1px solid #474747;
   border-radius: 3px;
@@ -34,10 +41,12 @@
   margin-right: 3vh;
   border-color: darkgreen;
 }
+
 .selectedModelButton:hover {
   border-color: lightblue;
   cursor: pointer;
 }
+
 .tab {
   border: 1px solid #474747;
   border-radius: 3px;
@@ -47,10 +56,12 @@
   padding-right: 2vh;
   color: white;
 }
+
 .tab:hover {
   cursor: pointer;
   border-color: green;
 }
+
 .selectedTab {
   border: 1px solid #474747;
   border-radius: 3px;
@@ -61,97 +72,114 @@
   color: white;
   border-color: darkgreen;
 }
+
 .selectedTab:hover {
   cursor: pointer;
   border-color: green;
 }
+
+/* main content area which expands to fill space */
+.searchBarContainer,
+.fileInputContainer {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 3vh; /* more space for housing additional controls below text entry area */
+}
+
 .inputContainer textarea {
-  margin-top: 1vh;
-  margin-left: 1vh;
-  width: 95%;
-  height: 17vh;
+  flex: 1;
+  width: 100%;
+  min-height: 15vh;
   font-size: 16px;
   box-sizing: border-box;
   resize: none;
-  border-radius: 35px; /* Keep the rounded corners */
+  border-radius: 10px;
   border: 1px solid #474747;
   background-color: #292929;
   color: white;
-  padding: 12px 80px 12px 20px; /* Padding with space for button */
-  overflow-y: auto; /* Make it scrollable when content exceeds height */
+  padding: 12px 20px;
+  overflow-y: auto; /* make it scrollable when content exceeds max height */
 }
 
 .inputContainer textarea:focus {
   outline: none;
   border-color: lightblue;
+}
+
+.fileInput {
+  padding: 1vh;
+  border: 1px solid #474747;
+  border-radius: 3px;
+  background-color: #292929;
+  color: white;
 }
 
 /* Custom scrollbar styling */
-.inputContainer textarea::-webkit-scrollbar {
+.inputContainer textarea::-webkit-scrollbar,
+.filePreview::-webkit-scrollbar {
   width: 8px;
 }
 
-.inputContainer textarea::-webkit-scrollbar-track {
+.inputContainer textarea::-webkit-scrollbar-track,
+.filePreview::-webkit-scrollbar-track {
   background: #191919;
   border-radius: 4px;
 }
 
-.inputContainer textarea::-webkit-scrollbar-thumb {
+.inputContainer textarea::-webkit-scrollbar-thumb,
+.filePreview::-webkit-scrollbar-thumb {
   background: #474747;
   border-radius: 4px;
 }
 
-.inputContainer textarea::-webkit-scrollbar-thumb:hover {
-  background: #666666;
-}
-
-.inputContainer textarea:focus {
-  outline: none;
-  border-color: lightblue;
-}
-
-/* Show scrollbar when content exceeds max-height */
-.inputContainer textarea::-webkit-scrollbar {
-  width: 8px;
-}
-
-.inputContainer textarea::-webkit-scrollbar-track {
-  background: #191919;
-  border-radius: 4px;
-}
-
-.inputContainer textarea::-webkit-scrollbar-thumb {
-  background: #474747;
-  border-radius: 4px;
-}
-
-.inputContainer textarea::-webkit-scrollbar-thumb:hover {
+.inputContainer textarea::-webkit-scrollbar-thumb:hover,
+.filePreview::-webkit-scrollbar-thumb:hover {
   background: #666666;
 }
 
 .sendButton {
-  position: absolute;
-  bottom: 1vh;
-  right: 9vh;
   border: 1px solid #474747;
   border-radius: 3px;
   background-color: #292929;
   padding: 1vh;
-  padding-left: 3vh;
-  padding-right: 3vh;
+  padding-left: 2vh;
+  padding-right: 2vh;
   color: white;
 }
+
 .sendButton:hover {
   cursor: pointer;
   border-color: lightblue;
 }
 
-.sendIcon {
-  width: 18px;
-  height: 18px;
-  filter: brightness(0) invert(1); /* Makes any image white */
-}
 .sendButton:hover {
   cursor: pointer;
   border-color: lightblue;
+}
+
+/* Controls container at the bottom */
+.controlsContainer {
+  display: flex;
+  gap: 1vh;
+  align-items: center;
+  justify-content: space-between; /* Space between left and right groups */
+  padding: 2vh 0; /* More vertical padding */
+  border-top: 1px solid #474747;
+  border-bottom: 1px solid #474747; /* Add bottom border */
+  margin-top: auto; /* Push to bottom */
+  background-color: #191919; /* Ensure consistent background */
+}
+
+.controlsLeft {
+  display: flex;
+  gap: 1vh;
+  align-items: center;
+}
+
+.controlsRight {
+  display: flex;
+  gap: 1vh;
+  align-items: center;
 }
