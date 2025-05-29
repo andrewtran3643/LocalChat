@@ -43,3 +43,77 @@
     background-color: grey;
     border: 1px solid lightgrey;
 }
+
+/* Menu container and button styles */
+.menuContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.menuButton {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.menuButton:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.menuButton:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Dropdown menu styles */
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #2a2a2a;
+    border: 1px solid #404040;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    min-width: 120px;
+    padding: 4px 0;
+    margin-top: 4px;
+}
+
+.dropdownItem {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    padding: 8px 16px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.dropdownItem:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdownItem:active {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* styling for delete button */
+.dropdownItem:last-child {
+    color: #ff6b6b;
+}
+
+.dropdownItem:last-child:hover {
+    background-color: rgba(255, 107, 107, 0.1);
+}
