@@ -16,6 +16,12 @@ function Summarize() {
 
   const [tab, setTab] = createSignal("text");
 
+  // Remove the autoResize function since we want fixed size
+  // const autoResize = (textarea) => {
+  //   textarea.style.height = 'auto';
+  //   textarea.style.height = Math.max(textarea.scrollHeight, 50) + 'px'; // minimum height of 50px
+  // };
+
   const setupModel = async () => {
 
     // disable uploading another model, and change the text to indicate a model is being loaded.
@@ -106,6 +112,9 @@ function Summarize() {
 
     chatContext.addMessage("Summarize: " + userMessage, true);
     inputTextArea.value = "";
+    
+    // No need to resize since we want fixed size
+    // autoResize(inputTextArea);
 
     let messageDate = chatContext.addMessage("Generating Message...", false, selectedModel());  // temporary message to indicate progress
     let output = await generator(userMessage, { max_new_tokens: 100});  // generate response
@@ -173,16 +182,18 @@ function Summarize() {
         {/* dynamic input UI */}
         <Switch>
           <Match when={tab() === "text"}>
-            <textarea id="inputTextArea" 
-              placeholder='Enter text to summarize here...'
-              onKeyDown={e => {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                  e.preventDefault();
-                  summarizeTextInput();
-                }
-              }}
-            ></textarea>
-            <button onClick={summarizeTextInput} class={styles.sendButton}>Send</button>
+            <div class={styles.searchBarContainer}>
+              <textarea id="inputTextArea" 
+                placeholder='Enter text to summarize here...'
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    summarizeTextInput();
+                  }
+                }}
+              ></textarea>
+              <button onClick={summarizeTextInput} class={styles.sendButton}>Send</button>
+            </div>
           </Match>
           <Match when={tab() === "file"}>
             <div style="margin-top:2vh;margin-left:2vh;">
